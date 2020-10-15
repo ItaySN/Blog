@@ -1,0 +1,4 @@
+.form-Comment{
+    display: flex;
+    flex-direction: column;
+}
