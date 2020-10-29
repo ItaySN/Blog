@@ -1,9 +1,10 @@
-import React,{Suspense, useState,lazy} from 'react';
+import React,{Suspense, useState,lazy, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Post from './components/Post';
 import ErrorBoundary from './components/ErrorBoundary'
 import Card from 'react-bootstrap/Card'
+import track from './analytics/analyticsManeger'
 const Form = lazy(()=> import('./components/Form'));
 const Comment = lazy(()=> import('./components/Comment'));
 
@@ -11,6 +12,10 @@ const Comment = lazy(()=> import('./components/Comment'));
 
 function App() {
   const [commentsArray,setCommentsArray] = useState([]);
+
+  useEffect(()=>{
+    track("app lunch")
+  },[])
 
   const addComment = (comment) =>{
     setCommentsArray(prev=>[comment,...prev])

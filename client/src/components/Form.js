@@ -2,6 +2,7 @@ import React, {useEffect, useRef, lazy, Suspense,useState} from 'react';
 import './Form.css'
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import  track  from '../analytics/analyticsManeger';
 
 
 function Form({addComment}) {
@@ -64,6 +65,7 @@ function Form({addComment}) {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        track('Comment posted')
         const newComment = {
             userName : userName,
             title : title, 
@@ -121,7 +123,10 @@ function Form({addComment}) {
                     ref = {commentInput}
                     required
                     onKeyDown = {focusSubmit}
-                    onChange = {(e) => setComment(e.target.value)}
+                    onChange = {(e) =>{ 
+                        setComment(e.target.value)
+                        track('Typing a comment')
+                    }}
                     maxLength = "120"
                     placeholder = "comment.."
                     >
