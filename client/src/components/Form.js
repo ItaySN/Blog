@@ -3,6 +3,9 @@ import './Form.css'
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import  track  from '../analytics/analyticsManeger';
+import { Redirect } from 'react-router-dom';
+
+
 
 
 function Form({addComment}) {
@@ -10,13 +13,13 @@ function Form({addComment}) {
     const titleInput = useRef();
     const commentInput = useRef();
     const submitButton = useRef();
-    
 
     // const [titleInput, setTitleInput] = useState('');
     const [userName, setUserName] = useState('');
     const [title,setTitle] = useState('')
     const [comment,setComment] = useState('')
-    // const [commentsArray, setCommentsArray] = useState([]);
+    const [isSubmit,setIsSubmit] = useState(false);
+    
     
     const dateToDisplay = (date) => {
     const displayDate = `${date.getFullYear()}-${
@@ -65,6 +68,7 @@ function Form({addComment}) {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        setIsSubmit(true);
         track('Comment posted')
         const newComment = {
             userName : userName,
@@ -85,6 +89,12 @@ function Form({addComment}) {
 
     return (
         <div className="comment-Section">
+            {isSubmit ?
+            <>
+            <Redirect to="/success" />  
+            </>
+            : 
+            <>
             <form onSubmit={handleSubmit} className="form-Comment">
                 <h1>Write a Comment</h1>
                 <label htmlFor='form-userInput'>
@@ -149,7 +159,8 @@ function Form({addComment}) {
                     </Button>
                 </label>
             </form>
-        
+            </>
+            }
         </div>
     )
 }

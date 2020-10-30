@@ -3,15 +3,31 @@ import logo from './logo.svg';
 import './App.css';
 import Post from './components/Post';
 import ErrorBoundary from './components/ErrorBoundary'
-import Card from 'react-bootstrap/Card'
 import track from './analytics/analyticsManeger'
+import {useHistory} from 'react-router-dom';
+
+
 const Form = lazy(()=> import('./components/Form'));
 const Comment = lazy(()=> import('./components/Comment'));
 
+// const handleSaveToPC = (jsonData,filename) => {
+//   const fileData = JSON.stringify(jsonData);
+//   const blob = new Blob([fileData], {type: "text/plain"});
+//   const url = URL.createObjectURL(blob);
+//   const link = document.createElement('a');
+//   link.download = `${filename}.json`;
+//   link.href = url;
+//   link.click();
+// }
 
 
 function App() {
   const [commentsArray,setCommentsArray] = useState([]);
+  const history = useHistory();
+
+  useEffect(()=>{
+   track('URL has changed')
+  },[history])
 
   useEffect(()=>{
     track("app lunch")
